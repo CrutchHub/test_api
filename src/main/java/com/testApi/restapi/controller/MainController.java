@@ -2,7 +2,7 @@ package com.testApi.restapi.controller;
 
 import com.testApi.restapi.model.UserGetResponse;
 import com.testApi.restapi.model.UserPostResponse;
-import com.testApi.restapi.model.UserRequest;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +18,9 @@ public class MainController {
     }
 
     @PostMapping("/api/main")
-    public UserPostResponse postMethod(@RequestBody UserRequest userRequest){
+    public UserPostResponse postMethod(@Valid @RequestBody UserPostResponse request){
         simulateDelay();
-        return new UserPostResponse(userRequest.getLogin(), userRequest.getPassword());
+        return request;
     }
 
     private void simulateDelay(){
