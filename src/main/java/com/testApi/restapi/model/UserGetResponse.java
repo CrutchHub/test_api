@@ -1,10 +1,10 @@
 package com.testApi.restapi.model;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Setter;
+
 
 @Getter
+@Setter
 public class UserGetResponse {
     private String login;
     private String status;
