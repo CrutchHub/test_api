@@ -5,11 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
 
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Getter
 public class UserPostResponse {
 
     @NotBlank(message = "Логин не заполнен")
@@ -27,17 +29,5 @@ public class UserPostResponse {
         this.login = login;
         this.password = password;
         this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getDate() {
-        return date;
     }
 }
