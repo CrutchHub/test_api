@@ -15,7 +15,7 @@ public class MainController {
 
     @GetMapping("/api/main")
     public ResponseEntity<UserGetResponse> getMethod() {
-        simulateDelay();
+//        simulateDelay();
         UserGetResponse response = new UserGetResponse();
         return ResponseEntity.ok(response);
     }
@@ -23,17 +23,17 @@ public class MainController {
 
     @PostMapping("/api/main")
     public ResponseEntity<UserPostResponse> postMethod(@Valid @RequestBody UserPostResponse request){
-        simulateDelay();
+//        simulateDelay();
         return ResponseEntity.status(HttpStatus.CREATED).body(request);
     }
 
-    private void simulateDelay(){
-        try {
-            int delay = 1000 + (int)(Math.random() * 1000);
-            Thread.sleep(delay);
-        }
-        catch (InterruptedException e){
-            Thread.currentThread().interrupt();
-        }
-    }
+//    private void simulateDelay(){
+//        try {
+//            int delay = 1000 + (int)(Math.random() * 1000);
+//            Thread.sleep(delay);
+//        }
+//        catch (InterruptedException e){
+//            Thread.currentThread().interrupt();
+//        }
+//    }
 }
