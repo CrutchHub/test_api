@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
+    private static final ResponseEntity<UserGetResponse> GET_RESPONSE = ResponseEntity.ok(UserGetResponse.
+            getInstance());
+
     @GetMapping("/api/main")
     public ResponseEntity<UserGetResponse> getMethod() {
 //        simulateDelay();
-        UserGetResponse response = new UserGetResponse();
-        return ResponseEntity.ok(response);
+        return GET_RESPONSE;
     }
 
 
@@ -27,13 +29,13 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.CREATED).body(request);
     }
 
-//    private void simulateDelay(){
-//        try {
-//            int delay = 1000 + (int)(Math.random() * 1000);
-//            Thread.sleep(delay);
-//        }
-//        catch (InterruptedException e){
-//            Thread.currentThread().interrupt();
-//        }
-//    }
+    private void simulateDelay(){
+        try {
+            int delay = 1000 + (int)(Math.random() * 1000);
+            Thread.sleep(delay);
+        }
+        catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+    }
 }
