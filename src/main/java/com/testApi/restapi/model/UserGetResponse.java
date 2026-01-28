@@ -1,15 +1,16 @@
 package com.testApi.restapi.model;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 
-@Getter
-public class UserGetResponse {
-    private String login;
-    private String status;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record UserGetResponse(
+        String login,
+        String status
+) {
+    private static final UserGetResponse INSTANCE = new UserGetResponse("Login1", "ok");
 
-
-    public UserGetResponse(){
-        this.login = "Login1";
-        this.status = "ok";
+    public static UserGetResponse getInstance() {
+        return INSTANCE;
     }
 }
