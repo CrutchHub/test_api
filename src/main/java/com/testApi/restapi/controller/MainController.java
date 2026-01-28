@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MainController {
 
-    private static final ResponseEntity<UserGetResponse> GET_RESPONSE = ResponseEntity.ok(UserGetResponse.
-            getInstance());
-
     @GetMapping("/api/main")
     public ResponseEntity<UserGetResponse> getMethod() {
 //        simulateDelay();
-        return GET_RESPONSE;
+        UserGetResponse response = new UserGetResponse();
+        return ResponseEntity.ok(response);
     }
 
 

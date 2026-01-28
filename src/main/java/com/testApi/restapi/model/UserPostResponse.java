@@ -17,20 +17,18 @@ public class UserPostResponse {
     @NotBlank(message = "Логин не заполнен")
     @Size(min = 4, max = 20, message =  "Логин должен быть не меньше 4 и не больше 20 символов")
     @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Логин должен быть только из букв, цифр и нижних подчеркиваний")
-    private final String login;
+    private String login;
 
     @NotBlank(message = "Пароль не заполнен")
     @Size(min = 4, max = 20, message = "Пароль должен быть не меньше 4 и не больше 20 символов")
-    private final String password;
-    private final String date;
-    private static final java.time.format.DateTimeFormatter FORMATTER =
-            java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private String password;
+    private String date;
 
     @JsonCreator
     public UserPostResponse(@JsonProperty("login") String login, @JsonProperty("password") String password){
         this.login = login;
         this.password = password;
-        this.date = java.time.LocalDateTime.now().format(FORMATTER);
+        this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
 }
