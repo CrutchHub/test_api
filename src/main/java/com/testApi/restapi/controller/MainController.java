@@ -16,7 +16,7 @@ public class MainController {
     private static final ResponseEntity<UserGetResponse> GET_RESPONSE =
             ResponseEntity.ok(UserGetResponse.getInstance());
 
-    @GetMapping
+    @GetMapping("api/main")
     public ResponseEntity<UserGetResponse> getMethod() {
         return GET_RESPONSE;
     }
