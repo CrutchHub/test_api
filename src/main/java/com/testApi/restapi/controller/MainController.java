@@ -10,21 +10,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class MainController {
-
-    private static final ResponseEntity<UserGetResponse> GET_RESPONSE =
+//    private static final List<byte[]> LEAK = new ArrayList<>();
+    private static final ResponseEntity<UserGetResponse> get_Response =
             ResponseEntity.ok(UserGetResponse.getInstance());
 
     @GetMapping("api/main")
     public ResponseEntity<UserGetResponse> getMethod() {
-        return GET_RESPONSE;
+//        byte[] chunk = new byte[1024 * 1024];
+//        LEAK.add(chunk);
+        return get_Response;
     }
 
 
     @PostMapping("/api/main")
     public ResponseEntity<UserPostResponse> postMethod(@Valid @RequestBody UserPostResponse request){
-//        simulateDelay();
+//      simulateDelay();
         return ResponseEntity.status(HttpStatus.CREATED).body(request);
     }
 

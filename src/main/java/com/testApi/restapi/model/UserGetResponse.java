@@ -8,9 +8,9 @@ public record UserGetResponse(
         String login,
         String status
 ) {
-    private static final UserGetResponse INSTANCE = new UserGetResponse("Login1", "ok");
+    private static final UserGetResponse instance = new UserGetResponse("Login1", "ok");
 
     public static UserGetResponse getInstance() {
-        return INSTANCE;
+        return instance;
     }
 }
