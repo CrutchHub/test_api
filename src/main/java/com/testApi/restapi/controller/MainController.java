@@ -16,11 +16,10 @@ public class MainController {
     private final DataBaseWorker dataBaseWorker;
 
     public MainController() {
-        this.dataBaseWorker = new DataBaseWorker(
-                "jdbc:postgresql://localhost:5432/testDB",
-                "admin",
-                "181121"
-        );
+        String dbUrl = System.getenv("SPRING_DATASOURCE_URL");
+        String dbUser = System.getenv("SPRING_DATASOURCE_USERNAME");
+        String dbPass = System.getenv("SPRING_DATASOURCE_PASSWORD");
+        this.dataBaseWorker = new DataBaseWorker(dbUrl, dbUser, dbPass);
     }
     @GetMapping("/api/main")
     public ResponseEntity<?> getMethod(@RequestParam String login) {
