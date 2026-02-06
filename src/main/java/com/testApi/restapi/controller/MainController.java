@@ -31,6 +31,10 @@ public class MainController {
 //                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
 //                        body("Пользователь не найден");
 //            }
+        if (user == null){
+             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Ошибка поиска пользователя");
+        }
         return ResponseEntity.ok(user);
     }
 
