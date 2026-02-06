@@ -26,11 +26,6 @@ public class MainController {
     public ResponseEntity<?> getMethod(@RequestParam String login) {
         simulateDelay();
         User user = dataBaseWorker.selectUserByLogin(login);
-//            if (user == null){
-//                throw new SQLException("Пользователь " + login + " не найден");
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
-//                        body("Пользователь не найден");
-//            }
         if (user == null){
              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Ошибка поиска пользователя");

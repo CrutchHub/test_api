@@ -56,6 +56,7 @@ public class DataBaseWorker {
              PreparedStatement stmtEmail = connection.prepareStatement(sqlEmail)
         )
         {
+            connection.setAutoCommit(false);
             int totalRows = 0;
 
             stmtUser.setString(1, user.getLogin());
@@ -67,6 +68,7 @@ public class DataBaseWorker {
             stmtEmail.setString(2, user.getEmail());
             totalRows += stmtEmail.executeUpdate();
 
+            connection.commit();
             return totalRows;
 
         }
