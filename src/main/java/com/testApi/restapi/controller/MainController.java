@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -37,8 +38,13 @@ public class MainController {
     public ResponseEntity<?> postMethod(@Valid @RequestBody User request){
         simulateDelay();
         request.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        int rowsAffected = dataBaseWorker.insertUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Создано строк: " + rowsAffected);
+        try{
+            int rowsAffected = dataBaseWorker.insertUser(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Создано строк: " + rowsAffected);
+        }
+        catch(DuplicateKeyException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Запись с подобными данными уже есть");
+        }
     }
 
     private void simulateDelay(){
