@@ -1,5 +1,7 @@
 package com.testApi.restapi.model;
 
+import org.yaml.snakeyaml.constructor.DuplicateKeyException;
+
 import java.sql.*;
 
 public class DataBaseWorker {
@@ -34,8 +36,9 @@ public class DataBaseWorker {
 
                     return new User(foundedUserLogin, foundedPassword, foundedEmail, foundedDate);
                 }
-                return null;
-
+                else{
+                    throw new SQLException("Пользователь с логином " + login + " не найден");
+                }
             }
 
         } catch (SQLException e) {
