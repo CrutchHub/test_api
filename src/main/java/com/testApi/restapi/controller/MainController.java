@@ -25,20 +25,13 @@ public class MainController {
     @GetMapping("/api/main")
     public ResponseEntity<?> getMethod(@RequestParam String login) {
         simulateDelay();
-        try{
-            User user = dataBaseWorker.selectUserByLogin(login);
-            if (user == null){
-                throw new SQLException("Пользователь " + login + " не найден");
+        User user = dataBaseWorker.selectUserByLogin(login);
+//            if (user == null){
+//                throw new SQLException("Пользователь " + login + " не найден");
 //                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
 //                        body("Пользователь не найден");
-            }
-            return ResponseEntity.ok(user);
-        }
-        catch (SQLException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
-                      body("Пользователь не найден");
-        }
-
+//            }
+        return ResponseEntity.ok(user);
     }
 
 
@@ -47,6 +40,9 @@ public class MainController {
         simulateDelay();
         request.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         int rowsAffected = dataBaseWorker.insertUser(request);
+        if (rowsAffected == -1){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Попытка вставки дубликата");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Создано строк: " + rowsAffected);
     }
 

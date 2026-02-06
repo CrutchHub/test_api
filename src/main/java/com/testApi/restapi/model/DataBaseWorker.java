@@ -73,5 +73,8 @@ public class DataBaseWorker {
             System.err.println("Ошибка вставки: " + e.getMessage());
             return 0;
         }
+        catch (DuplicateKeyException e) {
+            return -1;
+        }
     }
 }
