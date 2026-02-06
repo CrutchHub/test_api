@@ -69,12 +69,13 @@ public class DataBaseWorker {
 
             return totalRows;
 
-        } catch (SQLException e) {
-            System.err.println("Ошибка вставки: " + e.getMessage());
-            return 0;
         }
         catch (DuplicateKeyException e) {
             return -1;
+        }
+        catch (SQLException e) {
+            System.err.println("Ошибка вставки: " + e.getMessage());
+            return 0;
         }
     }
 }
