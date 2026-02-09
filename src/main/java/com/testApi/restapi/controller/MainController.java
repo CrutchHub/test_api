@@ -2,6 +2,7 @@ package com.testApi.restapi.controller;
 
 import com.testApi.restapi.model.DataBaseWorker;
 import com.testApi.restapi.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import jakarta.validation.Valid;
@@ -16,12 +17,11 @@ public class MainController {
 
     private final DataBaseWorker dataBaseWorker;
 
-    public MainController() {
-        String dbUrl = System.getenv("SPRING_DATASOURCE_URL");
-        String dbUser = System.getenv("SPRING_DATASOURCE_USERNAME");
-        String dbPass = System.getenv("SPRING_DATASOURCE_PASSWORD");
-        this.dataBaseWorker = new DataBaseWorker(dbUrl, dbUser, dbPass);
+    @Autowired
+    public MainController(DataBaseWorker dataBaseWorker) {
+        this.dataBaseWorker = dataBaseWorker;
     }
+
     @GetMapping("/api/main")
     public ResponseEntity<?> getMethod(@RequestParam String login) {
         simulateDelay();
@@ -39,9 +39,6 @@ public class MainController {
         simulateDelay();
         request.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         int rowsAffected = dataBaseWorker.insertUser(request);
-        if (rowsAffected == -1){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Попытка вставки дубликата");
-        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Создано строк: " + rowsAffected);
     }
 

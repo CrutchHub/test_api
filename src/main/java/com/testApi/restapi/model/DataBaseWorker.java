@@ -1,19 +1,20 @@
 package com.testApi.restapi.model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import org.yaml.snakeyaml.constructor.DuplicateKeyException;
+import javax.sql.DataSource;
 
 import java.sql.*;
 
+@Repository
 public class DataBaseWorker {
-    private final String url;
-    private final String user;
-    private final String password;
+    private final DataSource dataSource;
 
-    public DataBaseWorker(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
+    @Autowired
+    public DataBaseWorker(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
+
 
     public User selectUserByLogin(String login) {
         String sql = "SELECT u.login, u.password, u.date, e.email " +
@@ -21,7 +22,7 @@ public class DataBaseWorker {
                 "INNER JOIN \"Test\".\"Email\" e ON u.login = e.login " +
                 "WHERE u.login = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, login);
@@ -51,7 +52,7 @@ public class DataBaseWorker {
         String sqlUser = "INSERT INTO \"Test\".\"User\" (login, password, date) VALUES (?, ?, ?::timestamp)";
         String sqlEmail = "INSERT INTO \"Test\".\"Email\" (login, email) VALUES (?, ?)";
 
-        try (Connection connection = DriverManager.getConnection(url, this.user, password);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement stmtUser = connection.prepareStatement(sqlUser);
              PreparedStatement stmtEmail = connection.prepareStatement(sqlEmail)
         )
@@ -71,9 +72,6 @@ public class DataBaseWorker {
             connection.commit();
             return totalRows;
 
-        }
-        catch (DuplicateKeyException e) {
-            return -1;
         }
         catch (SQLException e) {
             System.err.println("Ошибка вставки: " + e.getMessage());
