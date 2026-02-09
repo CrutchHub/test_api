@@ -16,7 +16,7 @@ public class DataBaseWorker {
     }
 
 
-    public User selectUserByLogin(String login) {
+    public User selectUserByLogin(String login) throws SQLException{
         String sql = "SELECT u.login, u.password, u.date, e.email " +
                 "FROM \"Test\".\"User\" u " +
                 "INNER JOIN \"Test\".\"Email\" e ON u.login = e.login " +
@@ -42,9 +42,6 @@ public class DataBaseWorker {
                 }
             }
 
-        } catch (SQLException e) {
-            System.err.println("Ошибка поиска пользователя: " + e.getMessage());
-            return null;
         }
     }
 

@@ -25,12 +25,13 @@ public class MainController {
     @GetMapping("/api/main")
     public ResponseEntity<?> getMethod(@RequestParam String login) {
         simulateDelay();
-        User user = dataBaseWorker.selectUserByLogin(login);
-        if (user == null){
-             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
-                    body("Ошибка поиска пользователя");
+        try{
+            User user = dataBaseWorker.selectUserByLogin(login);
+            return ResponseEntity.ok(user);
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Ошибка поиска пользователя: " + e.getMessage());
         }
-        return ResponseEntity.ok(user);
     }
 
 
