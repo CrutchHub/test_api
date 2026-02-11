@@ -10,9 +10,9 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        String url = System.getenv("SPRING_DATASOURCE_URL");
-        String username = System.getenv("SPRING_DATASOURCE_USERNAME");
-        String password = System.getenv("SPRING_DATASOURCE_PASSWORD");
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String username = "postgres";
+        String password = "181121";
 
         if (url == null || username == null || password == null) {
             throw new IllegalStateException("Данные для подключения не указаны");
